@@ -2,21 +2,24 @@ package lexer
 
 import "go-interpreter/token"
 
+// similar to a typescript interface
 type Lexer struct {
-	input string
-	position int //pointer to curr position of ch
+	input        string
+	position     int //pointer to curr position of ch
 	readPosition int //poiner to next position
-	ch byte
+	ch           byte
 }
-//*Lexer is a pointer of Lexer type
 
+// *Lexer is a pointer of Lexer type
 func New(input string) *Lexer {
 	l := &Lexer{input: input} // new Lexer object, initialises input as input
 	l.readChar()
 	return l
 }
 
-func(l *Lexer) readChar() {
+// receiver function, so like a method on an object
+// where the object is Lexer
+func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
 	} else {
@@ -30,29 +33,29 @@ func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 	switch l.ch {
 	case '=':
-	tok = newToken(token.ASSIGN, l.ch)
+		tok = newToken(token.ASSIGN, l.ch)
 	case ';':
-	tok = newToken(token.SEMICOLON, l.ch)
+		tok = newToken(token.SEMICOLON, l.ch)
 	case '(':
-	tok = newToken(token.LPAREN, l.ch)
+		tok = newToken(token.LPAREN, l.ch)
 	case ')':
-	tok = newToken(token.RPAREN, l.ch)
+		tok = newToken(token.RPAREN, l.ch)
 	case ',':
-	tok = newToken(token.COMMA, l.ch)
+		tok = newToken(token.COMMA, l.ch)
 	case '+':
-	tok = newToken(token.PLUS, l.ch)
+		tok = newToken(token.PLUS, l.ch)
 	case '{':
-	tok = newToken(token.LBRACE, l.ch)
+		tok = newToken(token.LBRACE, l.ch)
 	case '}':
-	tok = newToken(token.RBRACE, l.ch)
+		tok = newToken(token.RBRACE, l.ch)
 	case 0:
-	tok.Literal = ""
-	tok.Type = token.EOF
+		tok.Literal = ""
+		tok.Type = token.EOF
 	}
 	l.readChar()
 	return tok
-	}
+}
 
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
-	}
+}
