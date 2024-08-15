@@ -6,8 +6,16 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `=+(){},;`
+	input := `let five = 5;
+let ten = 10;
+let add = fn(x, y) {
+x + y;
+};
+let result = add(five, ten);
+`
 
+	// tests is anonymous struct
+	// {token.ASSIGN === expectedType, "=" === expectedLiteral}
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
