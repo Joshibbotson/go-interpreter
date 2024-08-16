@@ -38,8 +38,6 @@ var keywords = map[string]TokenType{
 }
 
 func LookupIdent(ident string) TokenType {
-	// tok holds keyword value, ok = true/false if key exists
-	// if statement executed if ok true
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}

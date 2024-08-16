@@ -17,29 +17,6 @@ func New(input string) *Lexer {
 	return l
 }
 
-// receiver function, so like a method on an object
-// where the object is Lexer
-func (l *Lexer) readChar() {
-	if l.readPosition >= len(l.input) {
-		l.ch = 0
-	} else {
-		l.ch = l.input[l.readPosition]
-	}
-	l.position = l.readPosition
-	l.readPosition += 1
-}
-
-func (l *Lexer) skipWhitespace() {
-	/**
-	for loops can use a condition that, as long as it evaluates to true,
-	 will keep iterating. Here, the loop will continue as long as l.ch is a whitespace
-	  character (space, tab, newline, or carriage return).
-	*/
-	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
-		l.readChar()
-	}
-}
-
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 	l.skipWhitespace()
@@ -77,6 +54,7 @@ func (l *Lexer) NextToken() token.Token {
 		}
 	}
 	l.readChar()
+
 	return tok
 }
 
@@ -106,4 +84,27 @@ func isLetter(ch byte) bool {
 
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
+}
+
+// receiver function, so like a method on an object
+// where the object is Lexer
+func (l *Lexer) readChar() {
+	if l.readPosition >= len(l.input) {
+		l.ch = 0
+	} else {
+		l.ch = l.input[l.readPosition]
+	}
+	l.position = l.readPosition
+	l.readPosition += 1
+}
+
+func (l *Lexer) skipWhitespace() {
+	/**
+	for loops can use a condition that, as long as it evaluates to true,
+	 will keep iterating. Here, the loop will continue as long as l.ch is a whitespace
+	  character (space, tab, newline, or carriage return).
+	*/
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+		l.readChar()
+	}
 }
